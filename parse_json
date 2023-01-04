@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+while IFS= read -r gateway &&
+      IFS= read -r network &&
+      IFS= read -r netmask; do
+  subnet=$network"/"$netmask
+  #gateways[$subnet]=$gateway
+  echo "ip route $subnet via $gateway" # linux way
+  # echo "route add $subnet $gateway" # openBSD way
+done < <(jq -r '.[] | (.gatewayIP, .network, .maskLength)' < encap.json)
