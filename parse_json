@@ -6,7 +6,7 @@ set -o errexit
 # use as such : DEBUG=true ./script.sh
 [[ "${DEBUG}" == 'true' ]] && set -o xtrace
 
-declare API_USER="petrus"
+declare API_USER=""
 declare API_KEY=""
 declare API_URL="https://portal.ampr.org/api/v1/encap"
 declare POSITIONAL_ARGS=()
