@@ -7,7 +7,7 @@ Needs `curl` and `jq`.
 ## Usage & options
 ```
 $ ./parse_json -h
-usage: ./parse_json [-u|--user <username>] [-p|--password <api key>] [-U|--url <api url>] [-c|-l|-b]
+usage: ./parse_json [-u|--user <username>] [-k|--key <api key>] [-U|--url <api url>] [-c|-l|-b]
 ```
 
 | Short option | Long option | Description |
