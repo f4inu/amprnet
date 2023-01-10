@@ -24,7 +24,7 @@ while [[ $# -gt 0 ]]; do
       shift
       shift
       ;;
-    -p|--password)
+    -k|--key)
       API_KEY="$2"
       shift
       shift
