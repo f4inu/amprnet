@@ -10,9 +10,10 @@ declare API_USER=""
 declare API_KEY=""
 declare API_URL="https://portal.ampr.org/api/v1/encap"
 declare POSITIONAL_ARGS=()
+declare CMD_MODE="bsd" # default mode, because.
 
 die() { echo -n "Error: " >&2; echo "$@" >&2; exit 1; }
-usage() { echo "usage: $0 [-u|--user <username>] [-p|--password <api key>] [-U|--url <api url>]"; }
+usage() { echo "usage: $0 [-u|--user <username>] [-p|--password <api key>] [-U|--url <api url>] [-c|-l|-b]"; }
 
 case $BASH_VERSION in (""|[123].*) die "Bash 4.0 or newer required"; esac
 
@@ -33,6 +34,18 @@ while [[ $# -gt 0 ]]; do
       shift
       shift
       ;;
+    -c|--cisco)
+      CMD_MODE="cisco"
+      shift
+      ;;
+    -l|--linux)
+      CMD_MODE="linux"
+      shift
+      ;;
+    -b|--bsd)
+      CMD_MODE="bsd"
+      shift
+      ;;
     -h|--help)
       usage
       exit
@@ -48,13 +61,23 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ $API_KEY ]] || die "API KEY not set. Set in source or as argument with -p."
-[[ $API_USER ]] || die "API user not set Set in source or as argument with -u"
-[[ $API_URL ]] || die "API URL not set. Set in source or as argument with -U"
+[[ $API_USER ]] || die "API user not set Set in source or as argument with -u."
+[[ $API_URL ]] || die "API URL not set. Set in source or as argument with -U."
 
 while IFS= read -r gateway &&
       IFS= read -r network &&
       IFS= read -r netmask; do
   subnet=$network"/"$netmask
-  echo "ip route $subnet via $gateway" # >&2
-  # echo "route add $subnet $gateway"
+  case $CMD_MODE in 
+    cisco)
+      echo "ip route $subnet $gateway"
+      ;;
+    linux)
+      echo "ip route add $subnet via $gateway"
+      ;;
+    bsd)
+      echo "route add $subnet $gateway"
+      ;;
+  esac
+
 done < <(curl -s -u "$API_USER":"$API_KEY" "$API_URL" | jq -r '.[] | (.gatewayIP, .network, .maskLength)' || die "Please make sure curl and jq are installed")
