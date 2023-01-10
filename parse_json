@@ -13,7 +13,7 @@ declare POSITIONAL_ARGS=()
 declare CMD_MODE="bsd" # default mode, because.
 
 die() { echo -n "Error: " >&2; echo "$@" >&2; exit 1; }
-usage() { echo "usage: $0 [-u|--user <username>] [-p|--password <api key>] [-U|--url <api url>] [-c|-l|-b]"; }
+usage() { echo "usage: $0 [-u|--user <username>] [-k|--key <api key>] [-U|--url <api url>] [-c|-l|-b]"; }
 
 case $BASH_VERSION in (""|[123].*) die "Bash 4.0 or newer required"; esac
 
