@@ -1,3 +1,7 @@
+# Archiving notes: 
+
+This repo is now archived because the original API it was based on is no longer available. It is only kept for historical reasons. 
+
 # amprnet
 
 Get AMPRnet gateways IPs with API and generates ip routes.
