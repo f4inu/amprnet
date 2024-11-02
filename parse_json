@@ -61,7 +61,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ $API_USER ]] || die "API user not set Set in source or as argument with -u."
-[[ $API_KEY ]] || die "API KEY not set. Set in source or as argument with -p."
+[[ $API_KEY ]] || die "API KEY not set. Set in source or as argument with -k."
 [[ $API_URL ]] || die "API URL not set. Set in source or as argument with -U."
 
 while IFS= read -r gateway &&
